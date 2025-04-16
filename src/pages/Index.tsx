@@ -96,9 +96,15 @@ const Index = () => {
                 <div className="mt-6 border rounded-lg p-4 bg-gray-50">
                   <h3 className="text-sm font-medium text-gray-700 mb-2">Vector Preview</h3>
                   <div 
-                    className="bg-white p-4 rounded border"
-                    dangerouslySetInnerHTML={{ __html: vectorSvg }}
-                  />
+                    className="bg-white p-4 rounded border flex items-center justify-center min-h-[300px]"
+                  >
+                    <div
+                      className="w-full h-full max-w-[400px] max-h-[400px]"
+                      dangerouslySetInnerHTML={{ 
+                        __html: vectorSvg.replace('<svg', '<svg style="width:100%;height:100%;object-fit:contain;"') 
+                      }}
+                    />
+                  </div>
                 </div>
               )}
             </div>
