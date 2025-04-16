@@ -1,17 +1,19 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Toaster } from '@/components/ui/sonner';
 import { toast } from 'sonner';
 import FileUploader from '@/components/FileUploader';
 import VectorizeButton from '@/components/VectorizeButton';
-import { vectorizeImage, downloadSvg } from '@/utils/vectorizer';
+import VectorizeSettings from '@/components/VectorizeSettings';
+import { vectorizeImage, downloadSvg, defaultVectorizeSettings } from '@/utils/vectorizer';
 import { Sparkles, Image } from 'lucide-react';
+import type { VectorizeSettings as VectorizeSettingsType } from '@/components/VectorizeSettings';
 
 const Index = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [vectorSvg, setVectorSvg] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [settings, setSettings] = useState<VectorizeSettingsType>(defaultVectorizeSettings);
 
   const handleFileSelect = (file: File) => {
     setSelectedFile(file);
@@ -27,15 +29,10 @@ const Index = () => {
     setIsProcessing(true);
     
     try {
-      // Create a URL for the selected file
       const imageUrl = URL.createObjectURL(selectedFile);
-      
-      // Vectorize the image
-      const svg = await vectorizeImage(imageUrl);
+      const svg = await vectorizeImage(imageUrl, settings);
       setVectorSvg(svg);
       toast.success('Image vectorized successfully!');
-      
-      // Release the object URL
       URL.revokeObjectURL(imageUrl);
     } catch (error) {
       console.error('Vectorization error:', error);
@@ -80,13 +77,19 @@ const Index = () => {
               <FileUploader onFileSelect={handleFileSelect} />
               
               {selectedFile && (
-                <VectorizeButton 
-                  onVectorize={handleVectorize}
-                  isProcessing={isProcessing}
-                  hasVectorResult={!!vectorSvg}
-                  onDownload={handleDownload}
-                  className="mt-4"
-                />
+                <>
+                  <VectorizeSettings
+                    settings={settings}
+                    onSettingsChange={setSettings}
+                  />
+                  <VectorizeButton 
+                    onVectorize={handleVectorize}
+                    isProcessing={isProcessing}
+                    hasVectorResult={!!vectorSvg}
+                    onDownload={handleDownload}
+                    className="mt-4"
+                  />
+                </>
               )}
 
               {vectorSvg && (

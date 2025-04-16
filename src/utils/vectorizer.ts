@@ -1,20 +1,25 @@
 
 import * as potrace from 'potrace';
 import { saveAs } from 'file-saver';
+import type { VectorizeSettings } from '@/components/VectorizeSettings';
+
+export const defaultVectorizeSettings: VectorizeSettings = {
+  turdSize: 2,
+  alphaMax: 1,
+  optCurve: true,
+  optTolerance: 0.2,
+  threshold: 128,
+  color: '#000000',
+  background: '#FFFFFF',
+};
 
 // Function to vectorize an image using potrace
-export const vectorizeImage = (imageUrl: string): Promise<string> => {
+export const vectorizeImage = (imageUrl: string, settings: VectorizeSettings = defaultVectorizeSettings): Promise<string> => {
   return new Promise((resolve, reject) => {
     potrace.trace(imageUrl, {
-      turdSize: 2,
+      ...settings,
       turnPolicy: potrace.Potrace.TURNPOLICY_MINORITY,
-      alphaMax: 1,
-      optCurve: true,
-      optTolerance: 0.2,
-      threshold: 128,
       blackOnWhite: true,
-      color: '#000000',
-      background: '#FFFFFF',
     }, (err: Error | null, svg: string) => {
       if (err) {
         reject(err);
