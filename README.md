@@ -115,3 +115,117 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Dev Knowledge
+
+### Configuration Files
+
+#### Tailwind Configuration (tailwind.config.ts)
+
+1. Content Scanning:
+   ```typescript
+   content: [
+     "./pages/**/*.{ts,tsx}",
+     "./components/**/*.{ts,tsx}",
+     "./app/**/*.{ts,tsx}",
+     "./src/**/*.{ts,tsx}",
+   ]
+   ```
+   - Scans all TypeScript/TSX files for Tailwind class usage
+   - Ensures only used classes are included in the final CSS bundle
+
+2. Custom Theme:
+   - Colors:
+     - Defines a custom primary color palette (50-900) used in buttons and UI elements
+     - Sets up semantic color variables for border, input, background, etc.
+     - Includes special sidebar theming variables
+   - Container:
+     ```typescript
+     container: {
+       center: true,
+       padding: '2rem',
+       screens: {
+         '2xl': '1400px'
+       }
+     }
+     ```
+     - Centers content
+     - Adds default padding
+     - Sets max width for large screens
+
+3. Animations:
+   - Defines accordion animations used by UI components
+   - Uses the `tailwindcss-animate` plugin for animation utilities
+
+#### TypeScript Configuration (tsconfig.json)
+
+1. Modern JavaScript Features:
+   ```json
+   {
+     "target": "ES2020",
+     "lib": ["ES2020", "DOM", "DOM.Iterable"]
+   }
+   ```
+   - Targets modern JavaScript features
+   - Includes DOM type definitions
+
+2. Module Resolution:
+   ```json
+   {
+     "moduleResolution": "bundler",
+     "allowImportingTsExtensions": true,
+     "resolveJsonModule": true
+   }
+   ```
+   - Uses the bundler module resolution strategy
+   - Allows importing TypeScript files with extensions
+   - Enables importing JSON files
+
+3. Path Aliases:
+   ```json
+   {
+     "baseUrl": ".",
+     "paths": {
+       "@/*": ["./src/*"]
+     }
+   }
+   ```
+   - Enables the `@/` import alias used throughout the project
+   - Makes imports cleaner (e.g., `@/components/` instead of `../../components/`)
+
+4. Type Checking:
+   ```json
+   {
+     "strict": true,
+     "noUnusedLocals": true,
+     "noUnusedParameters": true,
+     "noFallthroughCasesInSwitch": true
+   }
+   ```
+   - Enables strict type checking
+   - Prevents unused variables and parameters
+   - Ensures switch cases are handled properly
+
+5. React Configuration:
+   ```json
+   {
+     "jsx": "react-jsx",
+     "types": ["react", "react-dom", "node"]
+   }
+   ```
+   - Configures JSX support for React
+   - Includes type definitions for React and Node.js
+
+These configurations provide:
+1. A robust type-checking system for catching errors early
+2. Modern JavaScript features while maintaining compatibility
+3. A comprehensive UI styling system with custom colors and animations
+4. Clean import paths with the `@/` alias
+5. Efficient CSS generation by only including used Tailwind classes
+
+The project benefits from:
+- Type safety and better developer experience through TypeScript
+- Consistent styling and theming through Tailwind
+- Modern JavaScript features while maintaining compatibility
+- Clean and maintainable code structure through path aliases
+- Optimized production builds through Tailwind's purging
