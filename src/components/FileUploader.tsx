@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface FileUploaderProps {
-  onFileSelect: (file: File) => void;
+  onFileSelect: (file: File | null) => void;
   className?: string;
 }
 
@@ -39,7 +39,7 @@ const FileUploader = ({ onFileSelect, className }: FileUploaderProps) => {
   const clearFile = () => {
     setPreviewUrl(null);
     setCurrentFile(null);
-    onFileSelect(null as any);
+    onFileSelect(null);
   };
 
   return (
