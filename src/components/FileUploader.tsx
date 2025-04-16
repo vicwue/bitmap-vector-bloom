@@ -1,4 +1,3 @@
-
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Upload, Image, File, X } from 'lucide-react';
@@ -40,6 +39,7 @@ const FileUploader = ({ onFileSelect, className }: FileUploaderProps) => {
   const clearFile = () => {
     setPreviewUrl(null);
     setCurrentFile(null);
+    onFileSelect(null as any);
   };
 
   return (
