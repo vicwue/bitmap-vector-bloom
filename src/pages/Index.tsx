@@ -99,9 +99,9 @@ const Index = () => {
                     className="bg-white p-4 rounded border flex items-center justify-center min-h-[300px]"
                   >
                     <div
-                      className="w-full h-full max-w-[400px] max-h-[400px]"
+                      className="w-full h-full"
                       dangerouslySetInnerHTML={{ 
-                        __html: vectorSvg.replace('<svg', '<svg style="width:100%;height:100%;object-fit:contain;"') 
+                        __html: vectorSvg.replace('<svg', '<svg style="width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;"') 
                       }}
                     />
                   </div>
